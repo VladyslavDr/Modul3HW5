@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Modul3HW5
 {
@@ -8,7 +9,9 @@ namespace Modul3HW5
     {
         public static void Main(string[] args)
         {
-            Run();
+            var str = GetHelloWorld().GetAwaiter().GetResult();
+
+            Console.WriteLine(str);
         }
 
         public static async Task<string> GetHello()
@@ -23,12 +26,12 @@ namespace Modul3HW5
 
         public static async Task<string> GetHelloWorld()
         {
-            return await GetHello() + " " + await GetWorld();
-        }
+            var helloWorldList = new List<Task<string>>();
 
-        public static async void Run()
-        {
-            Console.WriteLine(await GetHelloWorld());
+            helloWorldList.Add(GetHello());
+            helloWorldList.Add(GetWorld());
+
+            return string.Join(" ", await Task.WhenAll(helloWorldList));
         }
     }
 }
