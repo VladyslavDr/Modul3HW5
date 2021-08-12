@@ -8,31 +8,27 @@ namespace Modul3HW5
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine(GetHelloWorld().Result);
+            Run();
         }
 
         public static async Task<string> GetHello()
         {
-            return await Task.Run(async () =>
-            {
-                return await File.ReadAllTextAsync(@"File\Hello.txt");
-            });
+            return await File.ReadAllTextAsync(@"File\Hello.txt");
         }
 
         public static async Task<string> GetWorld()
         {
-            return await Task.Run(async () =>
-            {
-                return await File.ReadAllTextAsync(@"File\World.txt");
-            });
+            return await File.ReadAllTextAsync(@"File\World.txt");
         }
 
         public static async Task<string> GetHelloWorld()
         {
-            return await Task.Run(() =>
-            {
-                return GetHello().Result + " " + GetWorld().Result;
-            });
+            return await GetHello() + " " + await GetWorld();
+        }
+
+        public static async void Run()
+        {
+            Console.WriteLine(await GetHelloWorld());
         }
     }
 }
