@@ -16,12 +16,12 @@ namespace Modul3HW5
 
         public static async Task<string> GetHelloWorld()
         {
-            Func<string, Task<string>> test = async path => await File.ReadAllTextAsync(path);
+            Func<string, Task<string>> reareadFromFile = async path => await File.ReadAllTextAsync(path);
 
             var helloWorldList = new List<Task<string>>();
 
-            helloWorldList.Add(test(@"File\Hello.txt"));
-            helloWorldList.Add(test(@"File\World.txt"));
+            helloWorldList.Add(reareadFromFile(@"File\Hello.txt"));
+            helloWorldList.Add(reareadFromFile(@"File\World.txt"));
 
             return string.Join(" ", await Task.WhenAll(helloWorldList));
         }
