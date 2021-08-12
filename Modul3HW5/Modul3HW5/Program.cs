@@ -14,22 +14,14 @@ namespace Modul3HW5
             Console.WriteLine(str);
         }
 
-        public static async Task<string> GetHello()
-        {
-            return await File.ReadAllTextAsync(@"File\Hello.txt");
-        }
-
-        public static async Task<string> GetWorld()
-        {
-            return await File.ReadAllTextAsync(@"File\World.txt");
-        }
-
         public static async Task<string> GetHelloWorld()
         {
+            Func<string, Task<string>> test = async path => await File.ReadAllTextAsync(path);
+
             var helloWorldList = new List<Task<string>>();
 
-            helloWorldList.Add(GetHello());
-            helloWorldList.Add(GetWorld());
+            helloWorldList.Add(test(@"File\Hello.txt"));
+            helloWorldList.Add(test(@"File\World.txt"));
 
             return string.Join(" ", await Task.WhenAll(helloWorldList));
         }
